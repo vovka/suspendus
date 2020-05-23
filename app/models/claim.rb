@@ -1,0 +1,2 @@
+class Claim < Transaction
+end

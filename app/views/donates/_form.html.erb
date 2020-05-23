@@ -1,0 +1,23 @@
+<%= select_tag :item_to_donate, options_from_collection_for_select(donate.establishment.menu_items, "price_cents", "name"), include_blank: true %>
+<%= form_with(model: [donate.establishment, donate], local: true) do |form| %>
+  <% if donate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(donate.errors.count, "error") %> prohibited this donate from being saved:</h2>
+
+      <ul>
+        <% donate.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :amount_cents %>
+    <%= form.number_field :amount_cents %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

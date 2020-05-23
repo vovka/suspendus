@@ -1,0 +1,36 @@
+<%= form_with(model: establishment, local: true) do |form| %>
+  <% if establishment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(establishment.errors.count, "error") %> prohibited this establishment from being saved:</h2>
+
+      <ul>
+        <% establishment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+
+    <div>Menu items:<div>
+    <ul>
+    <%= form.fields_for :menu_items do |menu_item_form| %>
+      <li>
+      <%= menu_item_form.label :name %>
+      <%= menu_item_form.text_field :name %>
+      <%= menu_item_form.label :price_cents %>
+      <%= menu_item_form.text_field :price_cents %>
+      <%= menu_item_form.label :_destroy %>
+      <%= menu_item_form.check_box :_destroy %>
+      </li>
+    <% end %>
+    <ul>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

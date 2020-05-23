@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CafSuspendu</title>
+    <title>Suspendus</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,23 @@
   </head>
 
   <body>
+    <% unless flash.empty? %>
+      <script type="text/javascript">
+          <% flash.each do |f| %>
+        <% type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info') %>
+        toastr['<%= type %>']('<%= f[1] %>');
+      <% end %>
+      </script>
+    <% end %>
+
+    <% if current_user.nil? %>
+      <%= link_to new_user_session_path, class: 'login-button' do %>Sign in<% end %>
+    <% else %>
+      <%= current_user.role %>&nbsp;<%= current_user.email %>
+      <%= link_to destroy_user_session_path, method: :delete do %>Log out<% end %>
+    <% end %>
+
     <%= yield %>
+
   </body>
 </html>

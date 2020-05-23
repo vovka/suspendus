@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @establishment.name %>
+</p>
+
+<p>
+  <strong>Balance:</strong>
+  <%= @establishment.balance %>
+</p>
+
+<% if can?(:manage_users, Establishment) %>
+<div>Users</div>
+<%= form_for :user, url: establishment_invitations_path(@establishment) do |f| %>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+  <%= f.submit "Invite" %>
+<% end %>
+<ul>
+<% @establishment.users.each do |user| %>
+  <li><%= user.email %></li>
+<% end %>
+</ul>
+<% end %>
+
+<div>Menu items</div>
+<ul>
+  <% @establishment.menu_items.each do |menu_item| %>
+  <li>
+    <span><%= menu_item.name %></span>
+    <span><%= menu_item.price_cents %></span>
+  </li>
+  <% end %>
+</ul>
+
+<% if can?(:index, Transaction, @establishment) %>
+<div>Transactions</div>
+<ul>
+  <% @establishment.transactions.each do |transaction| %>
+  <li>
+    <%= transaction.is_a?(Donate) ? "Donate" : "Claim" %>&nbsp;
+    <%= l transaction.created_at, format: :short %>,
+    $<%= transaction.amount_cents %>
+    from <%= transaction.user.email %>
+    <%= link_to("Edit", edit_establishment_claim_path(@establishment, transaction)) if transaction.is_a?(Claim) %>
+  </li>
+  <% end %>
+</ul>
+<% end %>
+
+<% if can?(:create, Donate) %>
+<div>Donate</div>
+<%= render "donates/form", establishment: @establishment, donate: @establishment.donates.build %>
+<% end %>
+
+<% if can?(:create, Claim) %>
+<div>Claim</div>
+<%= render "claims/form", establishment: @establishment, claim: @establishment.claims.build %>
+<% end %>
+
+<% if can?(:edit, @establishment) %><%= link_to 'Edit', edit_establishment_path(@establishment) %> |<% end %>
+<%= link_to 'Back', establishments_path %>
