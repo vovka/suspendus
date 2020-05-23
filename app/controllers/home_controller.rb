@@ -8,5 +8,6 @@ class HomeController < ApplicationController
       end
     # else
     end
+    @map = MapMeta.new(Establishment.all)
   end
 end

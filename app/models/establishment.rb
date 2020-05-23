@@ -11,4 +11,12 @@ class Establishment < ApplicationRecord
   def balance
     donates.sum(:amount_cents) - claims.sum(:amount_cents)
   end
+
+  def coordinates
+    [longitude, latitude]
+  end
+
+  def items_remained
+    (balance / menu_items.average(:price_cents)).floor
+  end
 end

@@ -1,0 +1,4 @@
+<h3><%= establishment.name %></h3>
+<p><%= establishment.address %></p>
+<p><%= pluralize(establishment.items_remained, "item")%> remained</p>
+<p><%= link_to("Donate", establishment_path(establishment)) %></p>
