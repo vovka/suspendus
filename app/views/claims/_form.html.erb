@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :amount_cents %>
-    <%= form.number_field :amount_cents %>
+    <%= form.label :amount %>
+    <%= form.number_field :amount, step: 0.01 %>
   </div>
 
   <div class="actions">

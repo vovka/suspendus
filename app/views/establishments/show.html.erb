@@ -7,7 +7,7 @@
 
 <p>
   <strong>Balance:</strong>
-  <%= @establishment.balance %>
+  <%= humanized_money_with_symbol @establishment.balance %>
 </p>
 
 <% if can?(:manage_users, Establishment) %>
@@ -29,7 +29,7 @@
   <% @establishment.menu_items.each do |menu_item| %>
   <li>
     <span><%= menu_item.name %></span>
-    <span><%= menu_item.price_cents %></span>
+    <span><%= humanized_money_with_symbol menu_item.price %></span>
   </li>
   <% end %>
 </ul>
@@ -41,7 +41,7 @@
   <li>
     <%= transaction.is_a?(Donate) ? "Donate" : "Claim" %>&nbsp;
     <%= l transaction.created_at, format: :short %>,
-    $<%= transaction.amount_cents %>
+    <%= humanized_money_with_symbol transaction.amount %>
     from <%= transaction.user.email %>
     <%= link_to("Edit", edit_establishment_claim_path(@establishment, transaction)) if transaction.is_a?(Claim) %>
   </li>

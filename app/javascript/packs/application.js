@@ -24,6 +24,6 @@ import './bootstrap_custom.js'
 
 $(function(){
   $(document).on("change", "#item_to_donate", function($e) {
-    $("#donate_amount_cents").val($e.target.value);
+    $("#donate_amount").val($e.target.value);
   });
 });

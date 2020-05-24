@@ -1,4 +1,4 @@
-<%= select_tag :item_to_donate, options_from_collection_for_select(donate.establishment.menu_items, "price_cents", "name"), include_blank: true %>
+<%= select_tag :item_to_donate, options_from_collection_for_select(donate.establishment.menu_items, "price", "name_with_price"), include_blank: true %>
 <%= form_with(model: [donate.establishment, donate], local: true) do |form| %>
   <% if donate.errors.any? %>
     <div id="error_explanation">
@@ -13,8 +13,8 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :amount_cents %>
-    <%= form.number_field :amount_cents %>
+    <%= form.label :amount %>
+    <%= form.number_field :amount, step: 0.01 %>
   </div>
 
   <div class="actions">

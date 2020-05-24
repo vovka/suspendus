@@ -74,6 +74,6 @@ class ClaimsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def claim_params
-      params.require(:claim).permit(:amount_cents)
+      params.require(:claim).permit(:amount)
     end
 end
