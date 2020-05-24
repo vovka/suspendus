@@ -20,6 +20,7 @@ require("leaflet")
 global.toastr = require("toastr")
 import "../stylesheets/application"
 import "leaflet"
+import './bootstrap_custom.js'
 
 $(function(){
   $(document).on("change", "#item_to_donate", function($e) {

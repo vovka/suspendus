@@ -1,2 +1,17 @@
 // app/javascript/stylesheets/application.scss
-@import "toastr"
+@import "toastr";
+@import "bootstrap_custom";
+
+main {
+  margin-top: 56px;
+}
+
+.auth {
+  padding-right: 10px;
+
+  a {
+    &:visited {
+      color: unset;
+    }
+  }
+}

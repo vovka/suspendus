@@ -1,12 +1,12 @@
 class Establishment < ApplicationRecord
-  has_many :menu_items
+  has_many :menu_items, dependent: :destroy
   accepts_nested_attributes_for :menu_items,
     allow_destroy: true,
     reject_if: lambda { |attributes| attributes["name"].blank? || attributes["price_cents"].blank? }
   has_and_belongs_to_many :users#, -> { where(users: {establishment: true}) }
-  has_many :transactions
-  has_many :donates
-  has_many :claims
+  has_many :transactions, dependent: :destroy
+  has_many :donates, dependent: :destroy
+  has_many :claims, dependent: :destroy
 
   def balance
     donates.sum(:amount_cents) - claims.sum(:amount_cents)
@@ -17,6 +17,7 @@ class Establishment < ApplicationRecord
   end
 
   def items_remained
-    (balance / menu_items.average(:price_cents)).floor
+    avg = menu_items.average(:price_cents)
+    avg == 0 || avg.nil? ? 0 : (balance / avg).floor
   end
 end

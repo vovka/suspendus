@@ -1,32 +1,61 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Suspendus</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<head>
+  <title>Suspendus</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-  <body>
-    <% unless flash.empty? %>
-      <script type="text/javascript">
-          <% flash.each do |f| %>
-        <% type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info') %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <% unless flash.empty? %>
+  <script type="text/javascript">
+    <% flash.each do |f| %>
+      <% type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info') %>
         toastr['<%= type %>']('<%= f[1] %>');
       <% end %>
-      </script>
-    <% end %>
+  </script>
+  <% end %>
+</head>
 
-    <% if current_user.nil? %>
-      <%= link_to new_user_session_path, class: 'login-button' do %>Sign in<% end %>
-    <% else %>
-      <%= current_user.role %>&nbsp;<%= current_user.email %>
-      <%= link_to destroy_user_session_path, method: :delete do %>Log out<% end %>
-    <% end %>
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <%= yield %>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <% if user_signed_in? && can?(:create, Donate) %>
+        <li class="nav-item">
+          <%= link_to "Donate", establishments_path, class: "nav-link" %>
+        </li>
+        <% end %>
+      </ul>
+      <span class="auth text-light">
+        <% if current_user.nil? %>
+        <%= link_to new_user_session_path, class: 'btn btn-primary' do %>Sign in<% end %>
+        <% else %>
+        <%= current_user.role %>&nbsp;<%= current_user.email %>
+        <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-link" do %>Log out<% end %>
+        <% end %>
+      </span>
+      <%# <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form> %>
+    </div>
+  </nav>
 
-  </body>
+  <main role="main" class="container">
+    <div class="starter-template">
+      <%= yield %>
+    </div>
+  </main>
+</body>
+
 </html>

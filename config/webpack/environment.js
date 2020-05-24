@@ -6,7 +6,8 @@ environment.plugins.prepend('Provide',
   new webpack.ProvidePlugin({
     $: 'jquery/src/jquery',
     jQuery: 'jquery/src/jquery',
-    L: 'leaflet/src/Leaflet'
+    L: 'leaflet/src/Leaflet',
+    Popper: ['popper.js', 'default']
   })
 )
 
