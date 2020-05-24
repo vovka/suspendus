@@ -5,7 +5,7 @@
   :markers => @map.establishments.map do |establishment|
     {
       :latlng => establishment.coordinates,
-      :icon => { icon_url: asset_path("marker-icon") },
+      :icon => { icon_url: asset_path("marker-icon.png") },
       :popup => render("establishment_marker_popup", establishment: establishment)
     }
   end
