@@ -29,8 +29,8 @@ class DonatesController < ApplicationController
 
     respond_to do |format|
       if @donate.save
-        DonatorMailer.with(donate: @donate).payment_confirmation.deliver_now
-        EstablishmentMailer.with(donate: @donate).new_donation.deliver_now
+        # DonatorMailer.with(donate: @donate).payment_confirmation.deliver_now
+        # EstablishmentMailer.with(donate: @donate).new_donation.deliver_now
         format.html { redirect_to @establishment, notice: 'donate was successfully created.' }
         format.json { render :show, status: :created, location: @donate }
       else

@@ -111,16 +111,25 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  # config.action_mailer.raise_delivery_errors = true
   host = 'example.com' #replace with your own url
-  config.action_mailer.default_url_options = { host: ENV["HOST"] }
+  config.action_mailer.default_url_options = { host: ENV["MAIL_HOST"] }
 
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :user_name            => ENV["GMAIL_USER_NAME"],
-    :password             => ENV["GMAIL_PASSWORD"],
-    :authentication       => "plain",
-    :enable_starttls_auto => true
+    # :address              => "smtp.gmail.com",
+    # :port                 => 587,
+    # :user_name            => ENV["GMAIL_USER_NAME"],
+    # :password             => ENV["GMAIL_PASSWORD"],
+    # :authentication       => ENV["GMAIL_AUTH_METHOD"],
+    # :domain               => ENV["GMAIL_DOMAIN"]#,
+    # # :enable_starttls_auto => true
+    :port           => ENV['MAILGUN_SMTP_PORT'],
+    :address        => ENV['MAILGUN_SMTP_SERVER'],
+    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+    :domain         => 'suspendus.herokuapp.com',
+    :authentication => :plain,
   }
 end
